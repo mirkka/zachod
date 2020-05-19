@@ -1,0 +1,8 @@
+@import 'variables';
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  background-color: $white;
+  box-shadow: 0 0.2rem 0.6rem 0 rgba($gray, 0.06);
+}

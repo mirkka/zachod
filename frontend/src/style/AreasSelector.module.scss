@@ -1,0 +1,10 @@
+@import 'variables';
+
+.container {
+  display: flex;
+  flex-direction: row;
+
+  @include for-phone-only {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,9 @@
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; }
+}
+
+$almostWhite: #d9d9d9;
+$gray: #4a4a4a;
+$white: #fff;
+$purple: #8f7ae5;
+$salmon: #f87f6d;

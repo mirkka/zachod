@@ -1,0 +1,11 @@
+@import 'variables';
+
+.message {
+  position: fixed;
+  background-color: $salmon;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 2rem;
+  text-align: center;
+}
