@@ -17,3 +17,9 @@ export const IGNORE_EVENTS_QUERY = gql`
       getIgnoreEvents
     }
 `
+
+export const TIMESTAMPS_SUBSCRIPTION = gql`
+  subscription getTimestamps {
+    getTimestamps
+  }
+`;

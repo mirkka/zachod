@@ -12,6 +12,8 @@
     "apollo-client": "^2.6.9",
     "apollo-link": "^1.2.14",
     "apollo-link-http": "^1.5.17",
+    "aws-amplify": "^3.0.12",
+    "aws-appsync": "^3.0.3",
     "aws-appsync-auth-link": "^2.0.2",
     "chart.js": "^2.9.3",
     "graphql": "^14.6.0",
