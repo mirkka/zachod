@@ -2,7 +2,8 @@ import React from 'react'
 import { useQuery, useMutation } from "@apollo/react-hooks"
 import ErrorMessage from '../components/Error'
 import { IGNORE_EVENTS_MUTATION, IGNORE_EVENTS_QUERY } from '../api'
-import {Button, Container} from '@material-ui/core'
+import { Button } from '@material-ui/core'
+import styles from '../style/Button.module.scss'
 
 const IgnoreButton = () => {
     const { error, data } = useQuery(IGNORE_EVENTS_QUERY)
@@ -21,11 +22,11 @@ const IgnoreButton = () => {
     const buttonAttribute = data?.getIgnoreEvents ? 'default' : 'primary'
 
     return (
-        <Container>
-            <Button variant="contained" color={buttonAttribute} onClick={toggleIgnoreEvent}>
+        <div className={styles.wrapper}>
+            <Button classes={{root: styles.buttonSizeOverwrite}} variant="contained" color={buttonAttribute} onClick={toggleIgnoreEvent}>
                 {buttonText}
             </Button>
-        </Container>
+        </div>
       )
   }
 

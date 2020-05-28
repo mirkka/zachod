@@ -1,26 +1,10 @@
 @import 'Variables';
 
-.button {
-  padding: 1.2rem 1.6rem;
-  font-size: 1.2rem;
-  border-color: $almostWhite;
-  min-width: calc(100% / 3);
-  cursor: pointer;
-
-  @include for-phone-only {
-    width: 100%;
-    min-width: 100%;
-    font-size: 1rem;
-  }
+.wrapper {
+  display: flex;
 }
 
-.active {
-  color: $white;
-  border-color: $purple;
-  background-color: $purple;
-}
-
-.buttonIgnored {
-  
+.buttonSizeOverwrite {
+  min-width: 158px !important;
 }
 
