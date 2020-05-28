@@ -8,8 +8,9 @@ type BarChartProps = {
 
 const BarChart = (props: BarChartProps) => {
   const { timestamps } = props
+  const reversedTimestamps = [...timestamps].reverse()
 
-  const events = timestamps.map((dataForDay, index) => {
+  const events = reversedTimestamps.map((dataForDay, index) => {
     const count = dataForDay.length
     const date = new Date(dataForDay[0] * 1000)
     const dayLabel = `${date.getDate()}.${date.getMonth() + 1}`
