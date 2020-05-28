@@ -8,14 +8,13 @@ import Countdown from './components/Countdown'
 import BarChart from './components/BarChart'
 import { format, subDays } from 'date-fns'
 import IgnoreButton from './components/IgnoreButton'
-import Typography from '@material-ui/core/Typography'
+import { Typography } from '@material-ui/core'
 
 const formatDateLabel = (date: Date) => {
   return format(date, 'yyyy-MM-dd')
 }
 
 const App = () => {
-  // const todayLabel =  formatDateLabel(new Date())
   const weekDayslabels = [0, 1, 2, 3, 4, 5, 6].map((dayNumber) => {
     const day = subDays(new Date(), dayNumber)
     return formatDateLabel(day)
@@ -72,7 +71,7 @@ const App = () => {
         </Typography>
         <Timeline label={weekDayslabels[1]} timestamps={yesterdayData} />
         <Timeline label={weekDayslabels[0]} timestamps={todayData} />
-        <BarChart timestamps={data.getTimestamps.reverse()} />
+        <BarChart timestamps={data.getTimestamps} />
       </div>
     </div>
   )

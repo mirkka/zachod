@@ -10,7 +10,7 @@ const BarChart = (props: BarChartProps) => {
   const { timestamps } = props
   const reversedTimestamps = [...timestamps].reverse()
 
-  const events = reversedTimestamps.map((dataForDay, index) => {
+  const events = reversedTimestamps.map(dataForDay => {
     const count = dataForDay.length
     const date = new Date(dataForDay[0] * 1000)
     const dayLabel = `${date.getDate()}.${date.getMonth() + 1}`
@@ -24,8 +24,8 @@ const BarChart = (props: BarChartProps) => {
         Weekly Traffic
       </Typography>
     <Chart
-      width={'800px'}
-      height={'300px'}
+      width={'100%'}
+      height={'auto'}
       chartType='ColumnChart'
       loader={<div>Loading Chart</div>}
       data={[
@@ -33,6 +33,10 @@ const BarChart = (props: BarChartProps) => {
         ...events,
       ]}
       options={{
+        legend: {position: 'none'},
+        hAxis: {
+          title: 'Events per day',
+        },
         vAxis: {
           minValue: 0,
           maxValue: 15,
