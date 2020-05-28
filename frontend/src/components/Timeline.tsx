@@ -15,7 +15,6 @@ const Timeline = (props: TimelineProps) => {
     return null
   }
 
-  console.log(timestamps[0])
   const formatDateLabel = format(new Date(timestamps[0] * 1000), 'dd.MM')
 
   const events = timestamps.map((timestamp: number) => {
