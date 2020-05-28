@@ -66,7 +66,7 @@ const App = () => {
       <div className={styles.container}>
         <IgnoreButton />
         <Countdown timestamp={todayData[todayData.length - 1]} />
-        <Typography variant="h4" component="h4">
+        <Typography variant="h4" component="h4" gutterBottom>
           Daily Traffic
         </Typography>
         <Timeline label={weekDayslabels[1]} timestamps={yesterdayData} />
