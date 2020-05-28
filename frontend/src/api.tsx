@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
 export const TIMESTAMPS = gql`
-    query getTimestamps($day: String) {
-      getTimestamps(day: $day)
+    query getTimestamps($days: [String]) {
+      getTimestamps(days: $days)
     }
 `
 
