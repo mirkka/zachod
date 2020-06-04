@@ -60,12 +60,13 @@ const App = () => {
   if (error || !data) return <ErrorMessage message="Failed to load areas" />
   const todayData = data.getTimestamps[0]
   const yesterdayData = data.getTimestamps[1]
+  const lastTimestampOfToday = todayData[todayData.length - 1]
 
   return (
     <div className={styles.App}>
       <div className={styles.container}>
         <IgnoreButton />
-        <Countdown timestamp={todayData[todayData.length - 1]} />
+        {lastTimestampOfToday && <Countdown timestamp={lastTimestampOfToday} />}
         <Typography variant="h4" component="h4" gutterBottom>
           Daily Traffic
         </Typography>
