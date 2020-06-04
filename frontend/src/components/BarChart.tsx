@@ -13,7 +13,7 @@ const BarChart = (props: BarChartProps) => {
   const events = reversedTimestamps.map(dataForDay => {
     const count = dataForDay.length
     const date = new Date(dataForDay[0] * 1000)
-    const dayLabel = `${date.getDate()}.${date.getMonth() + 1}`
+    const dayLabel = (count > 0) ? `${date.getDate()}.${date.getMonth() + 1}` : '-'
 
     return [ dayLabel, count ]
   })
