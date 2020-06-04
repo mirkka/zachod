@@ -15,30 +15,31 @@ const Timeline = (props: TimelineProps) => {
     return null
   }
 
-  const formatDateLabel = format(new Date(timestamps[0] * 1000), 'dd.MM')
+  const date = new Date(label)
+  const formatDateLabel = format(date, 'dd.MM')
 
   const events = timestamps.map((timestamp: number) => {
     const date = new Date(timestamp * 1000)
     return [ label, date, date ]
   })
 
-  const firstTimestampOfTheDay = timestamps[0] * 1000
-  const startOfToday = new Date(firstTimestampOfTheDay)
-  startOfToday.setHours(0)
-  startOfToday.setMinutes(0)
-  startOfToday.setSeconds(0)
+  const startOfDay = new Date(date)
+  startOfDay.setHours(0)
+  startOfDay.setMinutes(0)
+  startOfDay.setSeconds(0)
 
-  const endOfToday = new Date(firstTimestampOfTheDay)
-  endOfToday.setHours(23)
-  endOfToday.setMinutes(59)
-  endOfToday.setSeconds(59)
+  const endOfDay = new Date(date)
+  endOfDay.setHours(23)
+  endOfDay.setMinutes(59)
+  endOfDay.setSeconds(59)
 
   return (
     <div>
       <Typography variant="h6" component="h6">
         {formatDateLabel}
       </Typography>
-      <Chart
+      { timestamps.length === 0 && <p>(no data)</p> }
+      { timestamps.length > 0 && <Chart
         width={'100%'}
         height={'100px'}
         chartType='Timeline'
@@ -57,13 +58,13 @@ const Timeline = (props: TimelineProps) => {
             showRowLabels: false,
           },
           hAxis: {
-            minValue: startOfToday,
-            maxValue: endOfToday,
+            minValue: startOfDay,
+            maxValue: endOfDay,
             format: 'H',
           }
         }}
         rootProps={{ 'data-testid': '1' }}
-      />
+      /> }
     </div>
   )
 }
