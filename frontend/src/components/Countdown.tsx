@@ -4,8 +4,6 @@ import classNames from 'classnames/bind'
 import { Typography } from '@material-ui/core'
 import CatIcon from '../icons/cat.svg'
 
-const cx = classNames.bind(styles)
-
 type CountdownProps = {
     timestamp: number
 }
