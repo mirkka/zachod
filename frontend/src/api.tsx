@@ -12,6 +12,12 @@ export const IGNORE_EVENTS_MUTATION = gql`
   }
 `
 
+export const DELETE_EVENT_MUTATION = gql`
+  mutation deleteEvent($timestam: string) {
+    deleteEvent(timestamp: $timestam)
+  }
+`
+
 export const IGNORE_EVENTS_QUERY = gql`
     query ignoreEvents {
       getIgnoreEvents

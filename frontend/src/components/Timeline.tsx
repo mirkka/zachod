@@ -1,7 +1,9 @@
 import React from 'react'
+import { useMutation } from "@apollo/react-hooks"
 import { Chart } from 'react-google-charts'
 import { Typography } from '@material-ui/core'
 import { format } from 'date-fns'
+import { DELETE_EVENT_MUTATION } from '../api'
 
 type TimelineProps = {
     timestamps: number[]
@@ -10,9 +12,36 @@ type TimelineProps = {
 
 const Timeline = (props: TimelineProps) => {
   const { timestamps, label } = props
+  const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
 
   if (!timestamps) {
     return null
+  }
+
+  const getEventTime = (timestamp: string) => {
+    return format(new Date(timestamp), 'dd.MM h:mm')
+  } 
+
+  const deleteEvent = async (timestamp: string) => {
+    await deleteEventMutation({
+      variables: { timestamp: timestamp }
+  })
+  }
+
+  const handleEventSelection = (chartWrapper: any )=> {
+    const chart = chartWrapper.getChart()
+    const selection = chart.getSelection()
+    if (selection.length === 1) {
+      const [selectedItem] = selection
+      const { row } = selectedItem
+      if (!row ) return
+      const value = chartWrapper.getDataTable().getValue(row, 2)
+      const eventTime = getEventTime(value)
+      if(window.confirm(`Do you want to delete ${eventTime}?`)) {
+        deleteEvent(value)
+      }
+      setTimeout(() => chart.setSelection([]), 1000)
+    }
   }
 
   const date = new Date(label)
@@ -51,6 +80,14 @@ const Timeline = (props: TimelineProps) => {
             { type: 'number', id: 'End' },
           ],
           ...events,
+        ]}
+        chartEvents={[
+          {
+            eventName: 'select',
+            callback: ({chartWrapper}) => {
+              handleEventSelection(chartWrapper)
+            }
+          }
         ]}
         options={{
           showRowNumber: true,
