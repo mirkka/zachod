@@ -3,7 +3,8 @@ import { useMutation } from "@apollo/react-hooks"
 import { Chart } from 'react-google-charts'
 import { Typography } from '@material-ui/core'
 import { format } from 'date-fns'
-import { DELETE_EVENT_MUTATION } from '../api'
+import { DELETE_EVENT_MUTATION, TIMESTAMPS } from '../api'
+import { getWeekDayslabels } from '../helpers'
 
 type TimelineProps = {
     timestamps: number[]
@@ -20,11 +21,16 @@ const Timeline = (props: TimelineProps) => {
 
   const getEventTime = (timestamp: string) => {
     return format(new Date(timestamp), 'dd.MM h:mm')
-  } 
+  }
 
-  const deleteEvent = async (timestamp: string) => {
+  const getEventDate = (timestamp: string) => {
+    return format(new Date(timestamp), 'YYY-MM-dd')
+  }
+
+  const deleteEvent = async (timestamp: number, day: string) => {
     await deleteEventMutation({
-      variables: { timestamp: timestamp }
+      variables: { timestamp, day },
+      refetchQueries: [{query: TIMESTAMPS, variables: {days: getWeekDayslabels()}}]
   })
   }
 
@@ -37,8 +43,9 @@ const Timeline = (props: TimelineProps) => {
       if (!row ) return
       const value = chartWrapper.getDataTable().getValue(row, 2)
       const eventTime = getEventTime(value)
+      const awsTimestamp = Math.floor(+new Date(value) / 1000)
       if(window.confirm(`Do you want to delete ${eventTime}?`)) {
-        deleteEvent(value)
+        deleteEvent(awsTimestamp, getEventDate(value))
       }
       setTimeout(() => chart.setSelection([]), 1000)
     }

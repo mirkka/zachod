@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../style/Countdown.module.scss'
-import classNames from 'classnames/bind'
 import { Typography } from '@material-ui/core'
 import CatIcon from '../icons/cat.svg'
 
