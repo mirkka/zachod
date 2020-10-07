@@ -3,8 +3,7 @@ import { useMutation } from "@apollo/react-hooks"
 import { Chart } from 'react-google-charts'
 import { Typography } from '@material-ui/core'
 import { format } from 'date-fns'
-import { DELETE_EVENT_MUTATION, TIMESTAMPS } from '../api'
-import { getWeekDayslabels } from '../helpers'
+import { DELETE_EVENT_MUTATION } from '../api'
 
 type TimelineProps = {
     timestamps: number[]
@@ -29,8 +28,7 @@ const Timeline = (props: TimelineProps) => {
 
   const deleteEvent = async (timestamp: number, day: string) => {
     await deleteEventMutation({
-      variables: { timestamp, day },
-      refetchQueries: [{query: TIMESTAMPS, variables: {days: getWeekDayslabels()}}]
+      variables: { timestamp, day }
   })
   }
 

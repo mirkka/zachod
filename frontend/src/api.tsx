@@ -35,3 +35,9 @@ export const IGNORE_EVENTS_SUBSCRIPTION = gql`
     getIgnoreEvents
   }
 `;
+
+export const DELETE_EVENT_SUBSCRIPTION = gql`
+  subscription deleteEvent {
+    deleteEvent
+  }
+`;

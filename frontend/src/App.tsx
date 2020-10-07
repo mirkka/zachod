@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useQuery } from "@apollo/react-hooks"
 import styles from './style/App.module.scss'
-import { TIMESTAMPS, TIMESTAMPS_SUBSCRIPTION } from './api'
+import { TIMESTAMPS, TIMESTAMPS_SUBSCRIPTION, DELETE_EVENT_SUBSCRIPTION } from './api'
 import ErrorMessage from './components/Error'
 import { getWeekDayslabels } from './helpers'
 import Timeline from './components/Timeline'
@@ -13,16 +13,17 @@ import { Typography } from '@material-ui/core'
 const App = () => {
   const weekDayslabels: string[] = getWeekDayslabels()
   const { subscribeToMore, loading, error, data } = useQuery(TIMESTAMPS, {
-    variables: {days: weekDayslabels}
+    variables: {days: weekDayslabels},
+    fetchPolicy: 'cache-and-network'
   })
 
   useEffect(() => {
-    const subscribe = () => {
+    const subscribeToNewEvent = () => {
       return subscribeToMore({
         document: TIMESTAMPS_SUBSCRIPTION,
         onError: error => {
           console.log(error)
-          subscribe()
+          subscribeToNewEvent()
         },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
@@ -36,14 +37,42 @@ const App = () => {
       })
     }
 
-    const unsubscribe = subscribe()
-    window.addEventListener('offline', unsubscribe)
+    const subscribeToDeleteEvent = () => {
+      return subscribeToMore({
+        document: DELETE_EVENT_SUBSCRIPTION,
+        onError: error => {
+          console.log(error)
+          subscribeToDeleteEvent()
+        },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+          const deletedTimestamp = subscriptionData.data.deleteEvent
+          const updatedData = prev.getTimestamps.map((arr: []) => {
+            const index = arr.findIndex((timestamp: number) => deletedTimestamp === timestamp)
+            const newArr = [...arr]
+            if (index > -1) {
+              newArr.splice(index, 1)
+            }
+            return newArr
+          })
+          return { getTimestamps: [...updatedData] }
+        }
+      })
+    }
+
+    const unsubscribeFromNewEvent = subscribeToNewEvent()
+    const unsubscribeFromDeleteEvent = subscribeToDeleteEvent()
+    window.addEventListener('offline', () => {
+      unsubscribeFromDeleteEvent()
+      unsubscribeFromNewEvent()
+    })
     window.addEventListener('online', () => {
       window.location.href = window.location.href
     })
 
     return () => {
-      unsubscribe()
+      unsubscribeFromNewEvent()
+      unsubscribeFromNewEvent()
     }
   }, [])
 
