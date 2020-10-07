@@ -47,13 +47,8 @@ const App = () => {
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
           const deletedTimestamp = subscriptionData.data.deleteEvent
-          const updatedData = prev.getTimestamps.map((arr: []) => {
-            const index = arr.findIndex((timestamp: number) => deletedTimestamp === timestamp)
-            const newArr = [...arr]
-            if (index > -1) {
-              newArr.splice(index, 1)
-            }
-            return newArr
+          const updatedData = prev.getTimestamps.map((arr: number[]) => {
+            return arr.filter(item => item !== deletedTimestamp)
           })
           return { getTimestamps: [...updatedData] }
         }
