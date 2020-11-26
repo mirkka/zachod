@@ -1,0 +1,101 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+type IoTModelType {
+  date: String
+  timestamp: AWSTimestamp
+}
+
+type IoTModelTypeConnection {
+  items: [IoTModelType]
+  nextToken: String
+}
+
+type Mutation {
+  createIoTModelType(date: String, timestamp: AWSTimestamp): AWSTimestamp
+  deleteEvent(day: String, timestamp: AWSTimestamp): AWSTimestamp
+  ignoreEvents(state: Boolean): Boolean
+}
+
+type Query {
+  getIgnoreEvents(limit: Int, nextToken: String): Boolean
+  getIoTModelType(timestamp: AWSTimestamp!): IoTModelType
+  getTimestamps(days: [String], limit: Int, nextToken: String): [[AWSTimestamp]]
+  listIoTModelTypes(filter: TableIoTModelTypeFilterInput, limit: Int, nextToken: String): IoTModelTypeConnection
+}
+
+type Subscription {
+  deleteEvent: AWSTimestamp @aws_subscribe(mutations : ["deleteEvent"])
+  getIgnoreEvents: Boolean @aws_subscribe(mutations : ["ignoreEvents"])
+  getTimestamps: AWSTimestamp @aws_subscribe(mutations : ["createIoTModelType"])
+}
+
+type timestamps {
+  timestamp: String
+}
+
+input TableBooleanFilterInput {
+  eq: Boolean
+  ne: Boolean
+}
+
+input TableFloatFilterInput {
+  between: [Float]
+  contains: Float
+  eq: Float
+  ge: Float
+  gt: Float
+  le: Float
+  lt: Float
+  ne: Float
+  notContains: Float
+}
+
+input TableIDFilterInput {
+  beginsWith: ID
+  between: [ID]
+  contains: ID
+  eq: ID
+  ge: ID
+  gt: ID
+  le: ID
+  lt: ID
+  ne: ID
+  notContains: ID
+}
+
+input TableIntFilterInput {
+  between: [Int]
+  contains: Int
+  eq: Int
+  ge: Int
+  gt: Int
+  le: Int
+  lt: Int
+  ne: Int
+  notContains: Int
+}
+
+input TableIoTModelTypeFilterInput {
+  timestamp: TableIntFilterInput
+}
+
+input TableStringFilterInput {
+  beginsWith: String
+  between: [String]
+  contains: String
+  eq: String
+  ge: String
+  gt: String
+  le: String
+  lt: String
+  ne: String
+  notContains: String
+}
+
+input UpdateIoTModelTypeInput {
+  timestamp: AWSTimestamp!
+}
