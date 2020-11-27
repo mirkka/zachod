@@ -2,7 +2,7 @@ import { Bucket } from '@aws-cdk/aws-s3'
 import { CloudFrontWebDistribution, OriginAccessIdentity } from '@aws-cdk/aws-cloudfront'
 import { ARecord, HostedZone } from '@aws-cdk/aws-route53'
 import { CloudFrontTarget } from '@aws-cdk/aws-route53-targets'
-import { Construct, RemovalPolicy } from '@aws-cdk/core'
+import { CfnOutput, Construct, RemovalPolicy } from '@aws-cdk/core'
 import { CanonicalUserPrincipal, PolicyStatement } from '@aws-cdk/aws-iam'
 
 export interface FrontendProps {
@@ -61,6 +61,11 @@ export class Frontend extends Construct {
             target: {
                 aliasTarget: new CloudFrontTarget(distribution)
             }
+        })
+
+        new CfnOutput(this, 'disctributionId', {
+            exportName: 'disctributionId',
+            value: distribution.distributionId
         })
     }
 }
