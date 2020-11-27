@@ -8,7 +8,7 @@ exports.handler = async (event) => {
 
     const getDay = async day => {
         const params = {
-            TableName: 'MotionTable',
+            TableName: process.env.TABLE_NAME,
             ExpressionAttributeNames: {
                 "#d": "date"
             },

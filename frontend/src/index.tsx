@@ -11,7 +11,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { createSubscriptionHandshakeLink } from 'aws-appsync-subscription-link';
 
 
-const url = 'https://u67wqc2vyvdunnhupmlpz3razq.appsync-api.eu-west-1.amazonaws.com/graphql'
+const url = 'https://ddj7g6pphvfn5lyyiukvfidgp4.appsync-api.eu-west-1.amazonaws.com/graphql'
 const region = 'eu-west-1'
 const auth = {
   type: 'AWS_IAM',

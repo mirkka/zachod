@@ -7,7 +7,7 @@ exports.handler = async (event) => {
 
 
     const params = {
-        TableName: 'MotionTable',
+        TableName: process.env.TABLE_NAME,
         Key: {
             "date": day,
             "timestamp": timestamp

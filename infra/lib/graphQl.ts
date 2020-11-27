@@ -14,8 +14,8 @@ export class GraphQl extends Construct {
         })
         const api = this.createApi()
         const table = this.createTable()
-        const deleteEventLambda = this.createLambda('deleteEventLambda')
-        const listTimestampsLambda = this.createLambda('listTimestamps')
+        const deleteEventLambda = this.createLambda('deleteEventLambda', table)
+        const listTimestampsLambda = this.createLambda('listTimestamps', table)
         const ignoreEventsLambda = this.createLambda('toggleIgnoreEventsLambda')
         const getIgnoreEventsLambda = this.createLambda('getIgnoreEventsLambda')
 
@@ -92,16 +92,20 @@ export class GraphQl extends Construct {
         })
     }
 
-    createLambda(filename: string) {
+    createLambda(filename: string, table?: Table) {
+        const environment: any = {
+            AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+        }
+        if(table) {
+            environment.TABLE_NAME = table.tableName
+        }
         const lambda = new Function(this, filename, {
             code: Code.fromAsset('../backend/resolvers'),
             handler: `${filename}.handler`,
             runtime: Runtime.NODEJS_12_X,
             timeout: Duration.seconds(30),
             memorySize: 128,
-            environment: {
-                AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
-            }
+            environment
         })
         return lambda
     }
