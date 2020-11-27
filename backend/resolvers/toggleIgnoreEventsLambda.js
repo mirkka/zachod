@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const SSM = require('aws-sdk/clients/ssm');
 const ssm = new SSM({ region: "eu-west-1" });
 
