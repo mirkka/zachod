@@ -1,10 +1,12 @@
-import { GraphqlApi, Schema, AuthorizationType, MappingTemplate, PrimaryKey, Values, AttributeValues } from '@aws-cdk/aws-appsync'
+import { GraphqlApi, Schema, AuthorizationType, MappingTemplate } from '@aws-cdk/aws-appsync'
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb'
 import { Construct, Duration } from '@aws-cdk/core'
 import { Function, Code, Runtime } from '@aws-cdk/aws-lambda'
 import { StringParameter } from '@aws-cdk/aws-ssm'
 
 export class GraphQl extends Construct {
+    public endpoint: string
+
     constructor(scope: Construct, id: string, props?: any) {
         super(scope, id)
         const parameter = new StringParameter(this, 'Parameter', {
@@ -90,6 +92,8 @@ export class GraphQl extends Construct {
             requestMappingTemplate: genericLambdaInvokeMT,
             responseMappingTemplate: genericResponseMT
         })
+
+        this.endpoint = api.graphqlUrl
     }
 
     createLambda(filename: string, table?: Table) {

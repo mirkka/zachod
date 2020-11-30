@@ -22,5 +22,8 @@
     "graphql-tag": "^2.10.3",
     "moment-timezone": "^0.5.31",
     "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.2"
   }
 }

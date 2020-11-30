@@ -1,6 +1,7 @@
 import { App, Stack, StackProps } from '@aws-cdk/core'
 import { Frontend } from './frontend'
 import { GraphQl } from './graphQl'
+import { IoT } from './iot'
 
 
 export class InfraStack extends Stack {
@@ -13,6 +14,10 @@ export class InfraStack extends Stack {
       hzId: 'Z2TJSCNWDHQYQ7'
     })
 
-    new GraphQl(this, 'graphql')
+    const { endpoint } = new GraphQl(this, 'graphql')
+
+    new IoT(this, 'IoT', {
+      appsyncUrl: endpoint
+    })
   }
 }
