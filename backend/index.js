@@ -9,8 +9,7 @@ const Gpio = require('onoff').Gpio,
 button = new Gpio(21, 'in', 'both');
 
 const debounceTime = 1000 * 60;
-
-const myThingName = 'sdk-nodejs-e2f7328d-663e-42d9-bf84-a567b35d3841';
+const myThingName = 'sdk-nodejs-fa441a08-f319-47c9-b738-1477eea1bb29';
 
 var device = awsIot.device({
   keyPath: './pir_2.private.key',
