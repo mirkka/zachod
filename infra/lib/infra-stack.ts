@@ -15,12 +15,13 @@ export class InfraStack extends Stack {
       hzId: 'Z2TJSCNWDHQYQ7'
     })
 
-    const { endpoint } = new GraphQl(this, 'graphql')
+    const { userPool } = new Cognito(this, 'CognitoUserPool')
+
+    const { endpoint } = new GraphQl(this, 'graphql', { userPool })
 
     new IoT(this, 'IoT', {
       appsyncUrl: endpoint
     })
 
-    new Cognito(this, 'CognitoUserPool')
   }
 }

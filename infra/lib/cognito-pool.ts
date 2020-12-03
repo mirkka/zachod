@@ -1,7 +1,8 @@
-import { UserPool, UserPoolClient } from '@aws-cdk/aws-cognito';
+import { IUserPool, UserPool, UserPoolClient } from '@aws-cdk/aws-cognito';
 import { Construct } from '@aws-cdk/core'
 
 export class Cognito extends Construct {
+    public userPool: IUserPool
     constructor(scope: Construct, id: string, props?: any) {
         super(scope, id)
 
@@ -20,5 +21,7 @@ export class Cognito extends Construct {
             userPool,
             generateSecret: false
         })
+
+        this.userPool = userPool
     }
 }

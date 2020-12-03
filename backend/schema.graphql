@@ -15,22 +15,22 @@ type IoTModelTypeConnection {
 }
 
 type Mutation {
-  createIoTModelType(date: String, timestamp: AWSTimestamp): AWSTimestamp
-  deleteEvent(day: String, timestamp: AWSTimestamp): AWSTimestamp
-  ignoreEvents(state: Boolean): Boolean
+  createIoTModelType(date: String, timestamp: AWSTimestamp): AWSTimestamp @aws_cognito_user_pools @aws_iam
+  deleteEvent(day: String, timestamp: AWSTimestamp): AWSTimestamp @aws_cognito_user_pools @aws_iam
+  ignoreEvents(state: Boolean): Boolean @aws_cognito_user_pools @aws_iam
 }
 
 type Query {
-  getIgnoreEvents(limit: Int, nextToken: String): Boolean
-  getIoTModelType(timestamp: AWSTimestamp!): IoTModelType
-  getTimestamps(days: [String], limit: Int, nextToken: String): [[AWSTimestamp]]
-  listIoTModelTypes(filter: TableIoTModelTypeFilterInput, limit: Int, nextToken: String): IoTModelTypeConnection
+  getIgnoreEvents(limit: Int, nextToken: String): Boolean @aws_cognito_user_pools @aws_iam
+  getIoTModelType(timestamp: AWSTimestamp!): IoTModelType @aws_cognito_user_pools @aws_iam
+  getTimestamps(days: [String], limit: Int, nextToken: String): [[AWSTimestamp]] @aws_cognito_user_pools @aws_iam
+  listIoTModelTypes(filter: TableIoTModelTypeFilterInput, limit: Int, nextToken: String): IoTModelTypeConnection @aws_cognito_user_pools @aws_iam
 }
 
 type Subscription {
-  deleteEvent: AWSTimestamp @aws_subscribe(mutations : ["deleteEvent"])
-  getIgnoreEvents: Boolean @aws_subscribe(mutations : ["ignoreEvents"])
-  getTimestamps: AWSTimestamp @aws_subscribe(mutations : ["createIoTModelType"])
+  deleteEvent: AWSTimestamp @aws_cognito_user_pools @aws_subscribe(mutations : ["deleteEvent"])
+  getIgnoreEvents: Boolean @aws_cognito_user_pools @aws_subscribe(mutations : ["ignoreEvents"])
+  getTimestamps: AWSTimestamp @aws_cognito_user_pools @aws_subscribe(mutations : ["createIoTModelType"])
 }
 
 type timestamps {

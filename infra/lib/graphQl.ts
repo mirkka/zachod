@@ -3,18 +3,21 @@ import { AttributeType, Table } from '@aws-cdk/aws-dynamodb'
 import { Construct, Duration } from '@aws-cdk/core'
 import { Function, Code, Runtime } from '@aws-cdk/aws-lambda'
 import { StringParameter } from '@aws-cdk/aws-ssm'
+import { IUserPool } from '@aws-cdk/aws-cognito'
 
 export class GraphQl extends Construct {
     public endpoint: string
 
     constructor(scope: Construct, id: string, props?: any) {
         super(scope, id)
+
+        const { userPool } = props
         const parameter = new StringParameter(this, 'Parameter', {
             parameterName: 'IOT_IGNORE_EVENTS',
             description: '-',
             stringValue: 'false'
         })
-        const api = this.createApi()
+        const api = this.createApi(userPool)
         const table = this.createTable()
         const deleteEventLambda = this.createLambda('deleteEventLambda', table)
         const listTimestampsLambda = this.createLambda('listTimestamps', table)
@@ -114,7 +117,7 @@ export class GraphQl extends Construct {
         return lambda
     }
 
-    createApi() {
+    createApi(userPool: IUserPool) {
         return new GraphqlApi(this, 'Api', {
             name: 'ZachodApp',
             schema: Schema.fromAsset('../backend/schema.graphql'),
@@ -122,6 +125,12 @@ export class GraphQl extends Construct {
                 defaultAuthorization: {
                     authorizationType: AuthorizationType.IAM
                 },
+                additionalAuthorizationModes: [{
+                    authorizationType: AuthorizationType.USER_POOL,
+                    userPoolConfig: {
+                        userPool
+                    }
+                }]
             }
         })
     }
