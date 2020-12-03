@@ -1,4 +1,5 @@
 import { App, Stack, StackProps } from '@aws-cdk/core'
+import { Cognito } from './cognito-pool'
 import { Frontend } from './frontend'
 import { GraphQl } from './graphQl'
 import { IoT } from './iot'
@@ -19,5 +20,7 @@ export class InfraStack extends Stack {
     new IoT(this, 'IoT', {
       appsyncUrl: endpoint
     })
+
+    new Cognito(this, 'CognitoUserPool')
   }
 }
