@@ -80,15 +80,15 @@ const App = () => {
     return (
         <div className={styles.App}>
             <div className={styles.container}>
-                <IgnoreButton />
                 {lastTimestampOfToday && <Countdown timestamp={lastTimestampOfToday} />}
                 <Typography variant="h4" component="h4" gutterBottom>
                     Daily Traffic
-        </Typography>
+                </Typography>
                 <Timeline label={weekDayslabels[1]} timestamps={yesterdayData} />
                 <Timeline label={weekDayslabels[0]} timestamps={todayData} />
                 <BarChart timestamps={data.getTimestamps} />
             </div>
+            <IgnoreButton />
         </div>
     )
 }

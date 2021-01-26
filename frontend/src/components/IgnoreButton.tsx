@@ -44,7 +44,7 @@ const IgnoreButton = () => {
 
     return (
         <div className={styles.wrapper}>
-            <Button classes={{root: styles.buttonSizeOverwrite}} variant="contained" color={buttonAttribute} onClick={toggleIgnoreEvent}>
+            <Button classes={{ root: styles.buttonStyleOverwrite}} variant="contained" color={buttonAttribute} onClick={toggleIgnoreEvent}>
                 {buttonText}
             </Button>
         </div>
