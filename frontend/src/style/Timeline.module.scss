@@ -1,0 +1,100 @@
+.wrapper {
+    padding-bottom: 20px;
+}
+
+.container {
+    margin: 17px 0 42px 0;
+}
+
+.containerOverlapping {
+    margin: 37px 0 42px 0;
+}
+
+.event {
+    position: absolute;
+}
+
+.line {
+    width: 100;
+    height: 2px;
+    background-color: #c1bfbf;
+    position: relative;
+}
+
+.tick {
+    position: absolute;
+    height: 10px;
+    width: 1px;
+    top: -3px;
+    background-color: #c1bfbf;
+
+    &:nth-of-type(2n) {
+        .tickNumber {
+            display: none;
+        }
+    }
+}
+
+.tickNumber {
+    font-size: 11px;
+    margin-top: -18px;
+    margin-left: -4px;
+}
+
+.tag {
+    position: absolute;
+    left: -11px;
+    top: 22px;
+    z-index: 1;
+}
+
+.tagTop {
+    top: -40px;
+}
+
+.triangle {
+    content: '';
+    position: absolute;
+    top: -11px;
+    left: 4px;
+    background-color: white;
+    border: 1px solid #3466cb;
+    width: 22px;
+    height: 22px;
+    transform: rotate(45deg);
+}
+
+.triangleTop {
+    top: 11px;
+}
+
+.dot {
+    position: absolute;
+    height: 9px;
+    width: 9px;
+    top: -3px;
+    border: none;
+    border-radius: 50%;
+    background-color: #3466cb;
+}
+
+.timestamp {
+    position: absolute;
+    background-color: white;
+    height: 22px;
+    width: 30px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    font-size: 11px;
+    border-left: 1px solid #3466cb;
+    border-right: 1px solid #3466cb;
+    border-bottom: 1px solid #3466cb;
+}
+
+.timestampTop {
+    border-left: 1px solid #3466cb;
+    border-right: 1px solid #3466cb;
+    border-top: 1px solid #3466cb;
+    border-bottom: none;
+    padding-top: 3px;
+}

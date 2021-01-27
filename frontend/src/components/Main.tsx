@@ -69,7 +69,7 @@ const App = () => {
             unsubscribeFromNewEvent()
             unsubscribeFromNewEvent()
         }
-    }, [])
+    })
 
     if (loading) return null
     if (error || !data) return <ErrorMessage message="Failed to load areas" />
