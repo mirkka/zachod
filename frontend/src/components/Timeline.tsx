@@ -90,7 +90,7 @@ const Timeline = (props: TimelineProps) => {
   }
 
   const timeline = (
-    <div className={`${state.labelsVisible && styles.wrapper}`}>
+    <div className={`${styles.wrapper} ${state.labelsVisible && styles.wrapperExpanded}`}>
       <Typography variant="h6" component="h6" onClick={toggleEventLabels}>
         {formatDateLabel}
       </Typography>
