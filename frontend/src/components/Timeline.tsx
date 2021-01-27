@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useMutation } from "@apollo/react-hooks"
 import { Typography } from '@material-ui/core'
 import { format, startOfDay, differenceInMinutes } from 'date-fns'
@@ -14,6 +14,7 @@ type TimelineProps = {
 const Timeline = (props: TimelineProps) => {
   const { timestamps, label } = props
   const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
+  const [state, setState] = useState({ labelsVisible: false })
 
   if (!timestamps) {
     return null
@@ -51,8 +52,15 @@ const Timeline = (props: TimelineProps) => {
     }, [])}
 
   const hasOverlappingEvent = () => {
-    return !!findOverlappingEvents(timestamps).find((event: any) => event.overlapping)
+    const hasOverlappingEvents = !!findOverlappingEvents(timestamps).find((event: any) => event.overlapping)
+    return hasOverlappingEvents && state.labelsVisible
   }
+
+  const toggleEventLabels = (e: any) => {
+    e.preventDefault()
+    setState({ ...state, labelsVisible: !state.labelsVisible })
+  }
+
   const date = new Date(label)
   const formatDateLabel = format(date, 'dd.MM')
 
@@ -64,10 +72,10 @@ const Timeline = (props: TimelineProps) => {
     return (
       <div className={styles.event} style={{ left: `${eventPosition}%`}} key={timestamp}>
         <div className={styles.dot}/>
-        <div className={`${styles.tag} ${overlapping && styles.tagTop}`} onClick={handleDeleteEvent.bind(null, timestamp)}>
+        {state.labelsVisible && (<div className={`${styles.tag} ${overlapping && styles.tagTop}`} onClick={handleDeleteEvent.bind(null, timestamp)}>
           <div className={`${styles.triangle} ${overlapping && styles.triangleTop}`}></div>
           <div className={`${styles.timestamp} ${overlapping && styles.timestampTop}`}>{time}</div>
-        </div>
+        </div>)}
       </div>
     )
   }
@@ -82,8 +90,8 @@ const Timeline = (props: TimelineProps) => {
   }
 
   const timeline = (
-    <div className={styles.wrapper}>
-      <Typography variant="h6" component="h6">
+    <div className={`${state.labelsVisible && styles.wrapper}`}>
+      <Typography variant="h6" component="h6" onClick={toggleEventLabels}>
         {formatDateLabel}
       </Typography>
       <div className={`${styles.container} ${hasOverlappingEvent() && styles.containerOverlapping}`}>
