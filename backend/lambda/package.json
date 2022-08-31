@@ -20,7 +20,7 @@
     "aws-appsync": "^3.0.3",
     "cross-fetch": "^3.0.4",
     "graphql-tag": "^2.10.3",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
